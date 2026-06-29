@@ -398,14 +398,34 @@ h1, h2, h3, h4 {
 /* ==========================================================================
    SECTION 00: HERO (DAY/NIGHT CONSTELLATION EXPERIENCE)
    ========================================================================== */
-.hero-section {
+.hero-cover-section {
   position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
   padding: 120px 0 60px 0;
   overflow: hidden;
-  border-bottom: 1px solid var(--border-color);
+  background-color: #0d0d0c !important; /* Force cover to always remain dark */
+  color: #f5f1e8 !important;
+  border-bottom: 1px solid rgba(245, 241, 232, 0.1);
+}
+
+.hero-cover-section h1,
+.hero-cover-section p,
+.hero-cover-section span {
+  color: #f5f1e8 !important;
+}
+
+.hero-cover-section .btn-secondary {
+  color: #f5f1e8 !important;
+  border: 1px solid rgba(245, 241, 232, 0.2) !important;
+  background-color: transparent !important;
+}
+
+.hero-cover-section .btn-secondary:hover {
+  border-color: var(--color-peach) !important;
+  background-color: rgba(245, 241, 232, 0.05) !important;
+  color: var(--color-peach) !important;
 }
 
 .constellation-bg {
@@ -413,12 +433,8 @@ h1, h2, h3, h4 {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: 0;
+  opacity: 0.6;
   transition: opacity 0.8s ease;
-}
-
-[data-theme="dark"] .constellation-bg {
-  opacity: 0.8;
 }
 
 .constellation-svg {
@@ -427,7 +443,7 @@ h1, h2, h3, h4 {
   filter: drop-shadow(0 0 6px var(--color-peach-light));
 }
 
-.hero-container {
+.hero-cover-container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -436,12 +452,12 @@ h1, h2, h3, h4 {
   z-index: 2;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 64px;
+  gap: 48px;
 }
 
 @media (min-width: 992px) {
-  .hero-container {
-    grid-template-columns: 1.2fr 0.8fr;
+  .hero-cover-container {
+    grid-template-columns: 1.15fr 0.85fr;
     align-items: center;
   }
 }

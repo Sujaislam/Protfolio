@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchGitHubRepos("Sujaislam");
   initContactForm();
   initTiltEffect();
+  initInteractiveCanvas();
 });
 
 /* ==========================================================================
@@ -244,4 +245,148 @@ function initTiltEffect() {
       card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)";
     });
   });
+}
+
+/* ==========================================================================
+   6. INTERACTIVE 3D CONSTELLATION NODE CANVAS (CHRISTOPH GEY COVER STYLE)
+   ========================================================================== */
+function initInteractiveCanvas() {
+  const canvas = document.getElementById("hero-canvas");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  let width = canvas.offsetWidth;
+  let height = canvas.offsetHeight;
+  canvas.width = width;
+  canvas.height = height;
+
+  const resizeCanvas = () => {
+    width = canvas.offsetWidth;
+    height = canvas.offsetHeight;
+    canvas.width = width;
+    canvas.height = height;
+  };
+  window.addEventListener("resize", resizeCanvas);
+
+  const particleCount = 48;
+  const particles = [];
+  let radius = Math.min(width, height) * 0.38;
+
+  // Initialize particles in a 3D sphere coordinate space using Fibonacci lattice distribution
+  for (let i = 0; i < particleCount; i++) {
+    const theta = Math.acos(-1 + (2 * i) / particleCount);
+    const phi = Math.sqrt(particleCount * Math.PI) * theta;
+
+    particles.push({
+      x3d: radius * Math.sin(theta) * Math.cos(phi),
+      y3d: radius * Math.sin(theta) * Math.sin(phi),
+      z3d: radius * Math.cos(theta),
+      x: 0,
+      y: 0,
+      size: 1.5 + Math.random() * 2
+    });
+  }
+
+  let targetRotX = 0.001;
+  let targetRotY = 0.0015;
+  let currentRotX = 0;
+  let currentRotY = 0;
+
+  // Track mouse coordinates to control sphere rotation dynamically
+  window.addEventListener("mousemove", (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+
+    const dx = (e.clientX - cx) / (rect.width / 2);
+    const dy = (e.clientY - cy) / (rect.height / 2);
+
+    targetRotX = dy * 0.03;
+    targetRotY = dx * 0.03;
+  });
+
+  window.addEventListener("mouseleave", () => {
+    targetRotX = 0.001;
+    targetRotY = 0.0015;
+  });
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+
+    currentRotX += (targetRotX - currentRotX) * 0.08;
+    currentRotY += (targetRotY - currentRotY) * 0.08;
+
+    const cosX = Math.cos(currentRotX);
+    const sinX = Math.sin(currentRotX);
+    const cosY = Math.cos(currentRotY);
+    const sinY = Math.sin(currentRotY);
+
+    const projectedParticles = [];
+
+    particles.forEach((p) => {
+      // Rotation around Y axis
+      let x1 = p.x3d * cosY - p.z3d * sinY;
+      let z1 = p.x3d * sinY + p.z3d * cosY;
+
+      // Rotation around X axis
+      let y2 = p.y3d * cosX - z1 * sinX;
+      let z2 = p.y3d * sinX + z1 * cosX;
+
+      p.x3d = x1;
+      p.y3d = y2;
+      p.z3d = z2;
+
+      // Depth perspective projection
+      const perspective = 350 / (350 + z2);
+      const screenX = width / 2 + x1 * perspective;
+      const screenY = height / 2 + y2 * perspective;
+
+      p.x = screenX;
+      p.y = screenY;
+
+      projectedParticles.push({
+        x: screenX,
+        y: screenY,
+        z: z2,
+        size: p.size * perspective,
+        color: `rgba(242, 160, 70, ${0.2 + (z2 + radius) / (2 * radius) * 0.8})`
+      });
+    });
+
+    // Draw connection lines
+    ctx.lineWidth = 0.35;
+    for (let i = 0; i < projectedParticles.length; i++) {
+      const p1 = projectedParticles[i];
+
+      for (let j = i + 1; j < projectedParticles.length; j++) {
+        const p2 = projectedParticles[j];
+        
+        const dx = p1.x - p2.x;
+        const dy = p1.y - p2.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        // Distance threshold for nodes connections
+        if (dist < 85) {
+          const lineAlpha = (1 - dist / 85) * 0.15 * ((p1.z + p2.z + 2 * radius) / (4 * radius));
+          ctx.strokeStyle = `rgba(245, 241, 232, ${lineAlpha})`;
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw nodes
+    projectedParticles.forEach((p) => {
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
 }
