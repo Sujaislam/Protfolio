@@ -293,6 +293,8 @@ function initInteractiveCanvas() {
   let currentRotY = 0;
 
   // Track mouse coordinates to control sphere rotation dynamically
+  const portraitImg = document.querySelector(".hero-portrait-img");
+
   window.addEventListener("mousemove", (e) => {
     const rect = canvas.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
@@ -303,11 +305,22 @@ function initInteractiveCanvas() {
 
     targetRotX = dy * 0.03;
     targetRotY = dx * 0.03;
+
+    // Apply interactive parallax translation and 3D rotation to the portrait image
+    if (portraitImg) {
+      const shiftX = dx * 12; // shift horizontal up to 12px
+      const shiftY = dy * 8;  // shift vertical up to 8px
+      const rotY = dx * 6;    // subtle 3D y-axis rotation up to 6deg
+      portraitImg.style.transform = `translate3d(${shiftX}px, ${shiftY}px, 0) rotateY(${rotY}deg)`;
+    }
   });
 
   window.addEventListener("mouseleave", () => {
     targetRotX = 0.001;
     targetRotY = 0.0015;
+    if (portraitImg) {
+      portraitImg.style.transform = "translate3d(0, 0, 0) rotateY(0deg)";
+    }
   });
 
   function animate() {
