@@ -463,6 +463,27 @@ h1, h2, h3, h4 {
   }
 }
 
+.hero-cover-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-cover-content {
+  position: relative;
+  z-index: 10;
+}
+
+.hero-cover-right {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+}
+
 .hero-cover-tag {
   font-size: 0.75rem;
   letter-spacing: 0.26em;
