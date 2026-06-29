@@ -1286,6 +1286,35 @@ h1, h2, h3, h4 {
 .form-status.error { color: red; }
 
 /* ==========================================================================
+   CLIENT & COLLABORATION TAGS
+   ========================================================================== */
+.clients-tag-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+  margin-bottom: 48px;
+}
+
+.client-tag {
+  background-color: var(--card-bg);
+  border: 1px dashed var(--border-dashed);
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  color: var(--text-ink-200);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+}
+
+.client-tag:hover {
+  border-color: var(--color-peach);
+  background-color: var(--bg-base);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+/* ==========================================================================
    FOOTER
    ========================================================================== */
 .site-footer {
