@@ -405,7 +405,7 @@ h1, h2, h3, h4 {
   align-items: center;
   padding: 120px 0 60px 0;
   overflow: hidden;
-  background-color: #0d0d0c !important; /* Force cover to always remain dark */
+  background-color: #0d0d0c !important;
   color: #f5f1e8 !important;
   border-bottom: 1px solid rgba(245, 241, 232, 0.1);
 }
@@ -431,7 +431,7 @@ h1, h2, h3, h4 {
 .constellation-bg {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
   opacity: 0.6;
   transition: opacity 0.8s ease;
@@ -449,10 +449,11 @@ h1, h2, h3, h4 {
   margin: 0 auto;
   padding: 0 24px;
   position: relative;
-  z-index: 2;
+  z-index: 10;
   display: grid;
   grid-template-columns: 1fr;
   gap: 48px;
+  align-items: center;
 }
 
 @media (min-width: 992px) {
@@ -499,20 +500,21 @@ h1, h2, h3, h4 {
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 0;
   pointer-events: none;
-  opacity: 0.6;
+  opacity: 0.55;
 }
 
 .hero-portrait-wrap {
   position: relative;
   width: 100%;
-  max-width: 380px;
+  max-width: 420px;
   margin: 0 auto;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   background: transparent;
+  z-index: 10;
 }
 
 .canvas-glow {
@@ -538,14 +540,14 @@ h1, h2, h3, h4 {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 80vh;
+  max-height: 90vh;
   object-fit: contain;
   object-position: bottom center;
-  z-index: 3;
+  z-index: 10;
   position: relative;
   pointer-events: none;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
-  filter: drop-shadow(0 16px 48px rgba(0,0,0,0.8));
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 20px 60px rgba(0,0,0,0.7)) drop-shadow(0 4px 20px rgba(242,160,70,0.15));
 }
 
 /* Selected Metrics Proof Band */
