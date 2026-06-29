@@ -308,10 +308,10 @@ function initInteractiveCanvas() {
 
     // Apply interactive parallax translation and 3D rotation to the portrait image
     if (portraitImg) {
-      const shiftX = dx * 12; // shift horizontal up to 12px
-      const shiftY = dy * 8;  // shift vertical up to 8px
-      const rotY = dx * 6;    // subtle 3D y-axis rotation up to 6deg
-      portraitImg.style.transform = `translate3d(${shiftX}px, ${shiftY}px, 0) rotateY(${rotY}deg)`;
+      const shiftX = dx * 10; // shift horizontal up to 10px
+      const shiftY = dy * 6;  // shift vertical up to 6px
+      const rotY = dx * 5;    // subtle 3D y-axis rotation up to 5deg
+      portraitImg.style.transform = `translateX(calc(-50% + ${shiftX}px)) translateY(${shiftY}px) rotateY(${rotY}deg)`;
     }
   });
 
@@ -319,7 +319,7 @@ function initInteractiveCanvas() {
     targetRotX = 0.001;
     targetRotY = 0.0015;
     if (portraitImg) {
-      portraitImg.style.transform = "translate3d(0, 0, 0) rotateY(0deg)";
+      portraitImg.style.transform = "translateX(-50%) translateY(0) rotateY(0deg)";
     }
   });
 
