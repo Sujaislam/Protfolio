@@ -493,17 +493,25 @@ h1, h2, h3, h4 {
   gap: 16px;
 }
 
-.canvas-container {
+/* Full section background canvas */
+.hero-canvas-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.hero-portrait-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 4;
-  max-width: 360px;
+  max-width: 380px;
   margin: 0 auto;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  overflow: hidden;
-  border-radius: 24px;
   background: transparent;
 }
 
@@ -527,18 +535,17 @@ h1, h2, h3, h4 {
 }
 
 .hero-portrait-img {
-  position: absolute;
-  bottom: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
+  display: block;
+  width: 100%;
   height: auto;
-  max-height: 115%;
+  max-height: 80vh;
   object-fit: contain;
+  object-position: bottom center;
   z-index: 3;
+  position: relative;
   pointer-events: none;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
-  filter: drop-shadow(0 8px 32px rgba(0,0,0,0.55));
+  filter: drop-shadow(0 16px 48px rgba(0,0,0,0.8));
 }
 
 /* Selected Metrics Proof Band */

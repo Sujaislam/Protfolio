@@ -254,23 +254,19 @@ function initInteractiveCanvas() {
   const canvas = document.getElementById("hero-canvas");
   if (!canvas) return;
 
+  const section = canvas.closest("section") || canvas.parentElement;
   const ctx = canvas.getContext("2d");
-  let width = canvas.offsetWidth;
-  let height = canvas.offsetHeight;
-  canvas.width = width;
-  canvas.height = height;
 
   const resizeCanvas = () => {
-    width = canvas.offsetWidth;
-    height = canvas.offsetHeight;
-    canvas.width = width;
-    canvas.height = height;
+    canvas.width = section.offsetWidth;
+    canvas.height = section.offsetHeight;
   };
+  resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
 
-  const particleCount = 48;
+  const particleCount = 55;
   const particles = [];
-  let radius = Math.min(width, height) * 0.38;
+  let radius = Math.min(canvas.width, canvas.height) * 0.25;
 
   // Initialize particles in a 3D sphere coordinate space using Fibonacci lattice distribution
   for (let i = 0; i < particleCount; i++) {
@@ -311,7 +307,7 @@ function initInteractiveCanvas() {
       const shiftX = dx * 10; // shift horizontal up to 10px
       const shiftY = dy * 6;  // shift vertical up to 6px
       const rotY = dx * 5;    // subtle 3D y-axis rotation up to 5deg
-      portraitImg.style.transform = `translateX(calc(-50% + ${shiftX}px)) translateY(${shiftY}px) rotateY(${rotY}deg)`;
+      portraitImg.style.transform = `translateX(${shiftX}px) translateY(${shiftY}px) rotateY(${rotY}deg)`;
     }
   });
 
@@ -319,12 +315,12 @@ function initInteractiveCanvas() {
     targetRotX = 0.001;
     targetRotY = 0.0015;
     if (portraitImg) {
-      portraitImg.style.transform = "translateX(-50%) translateY(0) rotateY(0deg)";
+      portraitImg.style.transform = "translateX(0) translateY(0) rotateY(0deg)";
     }
   });
 
   function animate() {
-    ctx.clearRect(0, 0, width, height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     currentRotX += (targetRotX - currentRotX) * 0.08;
     currentRotY += (targetRotY - currentRotY) * 0.08;
@@ -351,8 +347,8 @@ function initInteractiveCanvas() {
 
       // Depth perspective projection
       const perspective = 350 / (350 + z2);
-      const screenX = width / 2 + x1 * perspective;
-      const screenY = height / 2 + y2 * perspective;
+      const screenX = canvas.width / 2 + x1 * perspective;
+      const screenY = canvas.height / 2 + y2 * perspective;
 
       p.x = screenX;
       p.y = screenY;

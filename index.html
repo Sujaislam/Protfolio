@@ -147,16 +147,18 @@
 
   <main id="main-content">
     
-    <!-- SECTION 00: HERO COVER (CHRISTOPH GEY CONCEPT) -->
+    <!-- SECTION 00: HERO COVER -->
     <section id="top" class="hero-cover-section">
-      <!-- Animated Celestial Constellation Background Overlay -->
+      <!-- Full-section animated 3D node canvas (background layer) -->
+      <canvas id="hero-canvas" class="hero-canvas-bg" aria-hidden="true"></canvas>
+
+      <!-- Static SVG constellation lines overlay -->
       <div class="constellation-bg" aria-hidden="true">
         <svg viewBox="0 0 800 600" class="constellation-svg" preserveAspectRatio="none">
           <line x1="100" y1="150" x2="250" y2="100" stroke="var(--constellation-line)" stroke-width="0.75" />
           <line x1="250" y1="100" x2="400" y2="180" stroke="var(--constellation-line)" stroke-width="0.75" />
           <line x1="400" y1="180" x2="550" y2="120" stroke="var(--constellation-line)" stroke-width="0.75" />
           <line x1="550" y1="120" x2="700" y2="200" stroke="var(--constellation-line)" stroke-width="0.75" />
-          
           <circle cx="100" cy="150" r="3" fill="var(--color-peach-light)" />
           <circle cx="250" cy="100" r="4" fill="var(--color-peach)" />
           <circle cx="400" cy="180" r="3" fill="var(--color-peach-light)" />
@@ -179,11 +181,10 @@
           </div>
         </div>
 
-        <!-- Right Column: Interactive 3D Node Constellation Canvas and Portrait -->
+        <!-- Right Column: Portrait directly on dark section background (no canvas box behind) -->
         <div class="hero-cover-right">
-          <div class="canvas-container">
+          <div class="hero-portrait-wrap">
             <div class="canvas-glow"></div>
-            <canvas id="hero-canvas"></canvas>
             <img src="suja_no_bg.png" alt="Sajjatul Islam Suja" class="hero-portrait-img">
           </div>
         </div>
